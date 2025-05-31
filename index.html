@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Burger Billing System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">🍔 Burger Billing System</h1>
+
+    <!-- 🧾 ONE SINGLE FORM -->
+    <form method="POST">
+      <table class="table table-bordered bg-white">
+        <thead class="table-dark">
+          <tr><th>Item</th><th>Price</th><th>Quantity</th></tr>
+        </thead>
+        <tbody>
+          {% for item in menu %}
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>${{ item.price }}</td>
+            <td><input type="number" name="qty_{{ item.id }}" min="0" class="form-control" value="0"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="form-check mb-2">
+        <input type="checkbox" name="student" value="yes" class="form-check-input" id="studentCheck">
+        <label for="studentCheck" class="form-check-label">Are you a student? (20% off)</label>
+      </div>
+
+      <div class="form-check mb-2">
+        <input type="checkbox" name="delivery" value="yes" class="form-check-input" id="deliveryCheck">
+        <label for="deliveryCheck" class="form-check-label">Need delivery? (+5%)</label>
+      </div>
+
+      <div class="mb-3">
+        <label for="tip" class="form-label">Tip Amount ($):</label>
+        <select name="tip" class="form-select">
+          <option value="0">No Tip</option>
+          <option value="2">2$</option>
+          <option value="5">5$</option>
+          <option value="10">10$</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email to send bill:</label>
+        <input type="email" class="form-control" name="email" required>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Generate Bill</button>
+    </form>
+
+    {% if submitted %}
+    <hr>
+    <h3 class="mt-4">🧾 Final Bill</h3>
+    <table class="table table-striped bg-white">
+      <thead class="table-dark">
+        <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        {% for item in orders %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>${{ item.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.total }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p><strong>Subtotal:</strong> ${{ subtotal }}</p>
+    {% if student_discount %}
+    <p><strong>Student Discount:</strong> -${{ student_discount }}</p>
+    {% endif %}
+    {% if delivery_charge %}
+    <p><strong>Delivery Charge:</strong> +${{ delivery_charge }}</p>
+    {% endif %}
+    {% if tip %}
+    <p><strong>Tip:</strong> +${{ tip }}</p>
+    {% endif %}
+    <h4><strong>Total Bill: ${{ total }}</strong></h4>
+    <p class="text-center mt-4">Thank you and come again! 😊</p>
+    {% endif %}
+  </div>
+
+  <!-- Animation Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector("form").classList.add("fade-in");
+    });
+  </script>
+</body>
+</html>

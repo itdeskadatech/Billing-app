@@ -1,0 +1,50 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+}
+
+h1 {
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: #343a40;
+    color: white;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.form-check-label {
+    font-weight: 500;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+h3, h4 {
+    color: #343a40;
+}
+
+p {
+    font-size: 1.1rem;
+}
